@@ -28,13 +28,10 @@ RUN apt-get update
 RUN apt-get install -y ros-noetic-desktop-full
 RUN apt-get install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
 
-RUN ls /opt/ros/noetic
-RUN bash -c "source /opt/ros/noetic/setup.bash"
-RUN echo "source /opt/ros/noetic/setup.bash" >> .bashrc
 RUN rosdep init
 RUN rosdep update
 
-RUN apt install python3-rosdep python3-catkin-tools python3-vcstool -y
+RUN apt install python3-catkin-tools python3-vcstool -y
 RUN mkdir catkin_ws
 WORKDIR /root/catkin_ws
 RUN mkdir src
@@ -47,7 +44,10 @@ RUN git clone git@github.com:MIT-SPARK/Hydra.git hydra
 RUN vcs import . < hydra/install/hydra.rosinstall
 RUN rosdep install --from-paths . --ignore-src -r -y
 
+WORKDIR /root/catkin_ws
+RUN bash -c "source /opt/ros/noetic/setup.bash"
+RUN echo "source /opt/ros/noetic/setup.bash" >> .bashrc
+RUN catkin build
+
 RUN bash -c "source /root/catkin_ws/devel/setup.bash"
 RUN echo "source /root/catkin_ws/devel/setup.bash" >> /root/.bashrc
-WORKDIR /root/catkin_ws
-RUN catkin build
