@@ -47,8 +47,7 @@ RUN git clone git@github.com:MIT-SPARK/Hydra.git hydra
 RUN vcs import . < hydra/install/hydra.rosinstall
 RUN rosdep install --from-paths . --ignore-src -r -y
 
-WORKDIR /root/catkin_ws
-RUN catkin build
-
 RUN bash -c "source /root/catkin_ws/devel/setup.bash"
 RUN echo "source /root/catkin_ws/devel/setup.bash" >> /root/.bashrc
+WORKDIR /root/catkin_ws
+RUN catkin build
