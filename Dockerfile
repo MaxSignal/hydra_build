@@ -20,14 +20,7 @@ RUN apt-get install -y --no-install-recommends wget \
                     python3 \ 
                     python3-pip \ 
                     python3-dev \ 
-                    python3-venv \
-                    ssh
-
-RUN mkdir .ssh
-RUN chmod 700 .ssh
-RUN echo "$SSH_PRIVATE_KEY" | tr -d '\r' > .ssh/id_rsa
-RUN chmod 600 .ssh/id_rsa
-RUN ssh-keyscan GitHub.com >> .ssh/known_hosts
+                    python3-venv 
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
@@ -49,15 +42,13 @@ RUN catkin init
 RUN catkin config -DCMAKE_BUILD_TYPE=Release
 
 WORKDIR /home/catkin_ws/src
-RUN git config --global url."git@github.com:".insteadOf "https://github.com/"
+RUN git config --global url.git@github.com:.insteadOf https://github.com/
 RUN git clone git@github.com:MIT-SPARK/Hydra.git hydra
 RUN vcs import . < hydra/install/hydra.rosinstall
 RUN rosdep install --from-paths . --ignore-src -r -y
 
 WORKDIR /root/catkin_ws
 RUN catkin build
-
-RUN rm -rf /root/.ssh
 
 RUN bash -c "source /home/catkin_ws/devel/setup.bash"
 RUN echo "source /home/catkin_ws/devel/setup.bash" >> /root/.bashrc
