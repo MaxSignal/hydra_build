@@ -20,6 +20,6 @@ jobs:
       with:
         image: ros-image
         registry: ghcr.io
-        buildArgs: SSH_PRIVATE_KEY = "$SSH_PRIVATE_KEY"
+        buildArgs: SSH_PRIVATE_KEY = $SSH_PRIVATE_KEY
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
