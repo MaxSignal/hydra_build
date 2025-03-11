@@ -22,6 +22,12 @@ RUN apt-get install -y --no-install-recommends wget \
                     python3-dev \ 
                     python3-venv
 
+RUN mkdir .ssh
+RUN chmod 700 .ssh
+RUN echo "$SSH_PRIVATE_KEY" | tr -d '\r' > .ssh/id_ed25519
+RUN chmod 600 .ssh/id_ed25519
+RUN ssh-keyscan GitHub.com >> .ssh/known_hosts
+
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
 RUN apt-get update
@@ -30,7 +36,7 @@ RUN apt-get install -y python3-rosdep python3-rosinstall python3-rosinstall-gene
 
 RUN ls /opt/ros/noetic
 RUN bash -c "source /opt/ros/noetic/setup.bash"
-RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
+RUN echo "source /opt/ros/noetic/setup.bash" >> .bashrc
 RUN rosdep init
 RUN rosdep update
 
@@ -42,7 +48,7 @@ RUN catkin init
 RUN catkin config -DCMAKE_BUILD_TYPE=Release
 
 WORKDIR /home/catkin_ws/src
-RUN git clone https://github.com/MIT-SPARK/Hydra.git hydra
+RUN git clone git@github.com:MIT-SPARK/Hydra.git hydra
 RUN vcs import . < hydra/install/hydra.rosinstall
 RUN rosdep install --from-paths . --ignore-src -r -y
 
