@@ -42,7 +42,7 @@ RUN catkin init
 RUN catkin config -DCMAKE_BUILD_TYPE=Release
 
 WORKDIR /home/catkin_ws/src
-RUN git clone git@github.com:MIT-SPARK/Hydra.git hydra
+RUN git clone https://github.com/MIT-SPARK/Hydra.git hydra
 RUN vcs import . < hydra/install/hydra.rosinstall
 RUN rosdep install --from-paths . --ignore-src -r -y
 
