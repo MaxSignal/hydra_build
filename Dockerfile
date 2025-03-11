@@ -25,8 +25,8 @@ RUN apt-get install -y --no-install-recommends wget \
 
 RUN mkdir .ssh
 RUN chmod 700 .ssh
-RUN echo "$SSH_PRIVATE_KEY" | tr -d '\r' > .ssh/id_ed25519
-RUN chmod 600 .ssh/id_ed25519
+RUN echo "$SSH_PRIVATE_KEY" | tr -d '\r' > .ssh/id_rsa
+RUN chmod 600 .ssh/id_rsa
 RUN ssh-keyscan GitHub.com >> .ssh/known_hosts
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
