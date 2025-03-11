@@ -59,4 +59,4 @@ RUN bash -c "source /root/catkin_ws/devel/setup.bash"
 RUN echo "source /root/catkin_ws/devel/setup.bash" >> /root/.bashrc
 
 RUN pip install gdown
-COPY quickstart.sh /root/catkin_ws
+RUN echo "gdown 'https://drive.google.com/uc?export=download&id=1CA_1Awu-bewJKpDrILzWok_H_6cOkGDb' -O 'uHumans2_office_s1_00h.bag' && rosbag decompress uHumans2_office_s1_00h.bag" >> quickstart.sh
