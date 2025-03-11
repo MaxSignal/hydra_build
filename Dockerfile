@@ -59,4 +59,4 @@ RUN bash -c "source /root/catkin_ws/devel/setup.bash"
 RUN echo "source /root/catkin_ws/devel/setup.bash" >> /root/.bashrc
 
 RUN pip install gdown
-COPY quickstart.py /root/catkin_ws
+COPY quickstart.sh /root/catkin_ws
