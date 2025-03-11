@@ -55,5 +55,7 @@ RUN rosdep install --from-paths . --ignore-src -r -y
 WORKDIR /root/catkin_ws
 RUN catkin build
 
+RUN rm -rf /root/.ssh
+
 RUN bash -c "source /home/catkin_ws/devel/setup.bash"
 RUN echo "source /home/catkin_ws/devel/setup.bash" >> /root/.bashrc
