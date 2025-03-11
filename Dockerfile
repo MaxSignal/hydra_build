@@ -38,7 +38,7 @@ RUN mkdir catkin_ws
 WORKDIR /root/catkin_ws
 RUN mkdir src
 RUN catkin init
-RUN catkin config -DCMAKE_BUILD_TYPE=Release --extend /opt/ros/melodic
+RUN catkin config -DCMAKE_BUILD_TYPE=Release --extend /opt/ros/noetic
 
 WORKDIR /root/catkin_ws/src
 RUN git config --global url."https://github.com/".insteadOf git@github.com:
