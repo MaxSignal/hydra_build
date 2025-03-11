@@ -20,7 +20,9 @@ RUN apt-get install -y --no-install-recommends wget \
                     python3 \ 
                     python3-pip \ 
                     python3-dev \ 
-                    python3-venv 
+                    python3-venv \
+                    software-properties-common
+
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
