@@ -21,6 +21,7 @@ RUN apt-get install -y --no-install-recommends wget \
                     python3-pip \ 
                     python3-dev \ 
                     python3-venv
+                    ssh
 
 RUN mkdir .ssh
 RUN chmod 700 .ssh
