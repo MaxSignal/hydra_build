@@ -29,6 +29,8 @@ RUN apt-get install -y ros-noetic-desktop-full
 RUN apt-get install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
 
 RUN rosdep init
+RUN bash -c "source /opt/ros/noetic/setup.bash"
+RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 RUN rosdep update
 
 RUN apt install python3-catkin-tools python3-vcstool -y
@@ -36,7 +38,7 @@ RUN mkdir catkin_ws
 WORKDIR /root/catkin_ws
 RUN mkdir src
 RUN catkin init
-RUN catkin config -DCMAKE_BUILD_TYPE=Release
+RUN catkin config -DCMAKE_BUILD_TYPE=Release --extend /opt/ros/melodic
 
 WORKDIR /root/catkin_ws/src
 RUN git config --global url."https://github.com/".insteadOf git@github.com:
@@ -45,8 +47,6 @@ RUN vcs import . < hydra/install/hydra.rosinstall
 RUN rosdep install --from-paths . --ignore-src -r -y
 
 WORKDIR /root/catkin_ws
-RUN bash -c "source /opt/ros/noetic/setup.bash"
-RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 RUN catkin build
 
 RUN bash -c "source /root/catkin_ws/devel/setup.bash"
