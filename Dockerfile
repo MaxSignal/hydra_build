@@ -32,7 +32,7 @@ RUN apt-get install -y python3-rosdep python3-rosinstall python3-rosinstall-gene
 
 RUN add-apt-repository ppa:borglab/gtsam-develop
 RUN apt update
-RUN apt install libgtsam-dev libgtsam-unstable-dev
+RUN apt install -y libgtsam-dev libgtsam-unstable-dev
 
 RUN rosdep init
 RUN bash -c "source /opt/ros/noetic/setup.bash"
