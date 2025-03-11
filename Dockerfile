@@ -28,6 +28,10 @@ RUN apt-get update
 RUN apt-get install -y ros-noetic-desktop-full
 RUN apt-get install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
 
+RUN add-apt-repository ppa:borglab/gtsam-develop
+RUN apt update
+RUN apt install libgtsam-dev libgtsam-unstable-dev
+
 RUN rosdep init
 RUN bash -c "source /opt/ros/noetic/setup.bash"
 RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
