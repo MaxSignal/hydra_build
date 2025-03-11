@@ -22,8 +22,6 @@ RUN apt-get install -y --no-install-recommends wget \
                     python3-dev \ 
                     python3-venv
 
-
-WORKDIR /home
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
 RUN apt-get update
@@ -32,13 +30,13 @@ RUN apt-get install -y python3-rosdep python3-rosinstall python3-rosinstall-gene
 
 RUN ls /opt/ros/noetic
 RUN bash -c "source /opt/ros/noetic/setup.bash"
-RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 RUN rosdep init
 RUN rosdep update
 
 RUN apt install python3-rosdep python3-catkin-tools python3-vcstool -y
 RUN mkdir catkin_ws
-WORKDIR /home/catkin_ws
+WORKDIR /root/catkin_ws
 RUN mkdir src
 RUN catkin init
 RUN catkin config -DCMAKE_BUILD_TYPE=Release
@@ -48,8 +46,8 @@ RUN git clone git@github.com:MIT-SPARK/Hydra.git hydra
 RUN vcs import . < hydra/install/hydra.rosinstall
 RUN rosdep install --from-paths . --ignore-src -r -y
 
-WORKDIR /home/catkin_ws
+WORKDIR /root/catkin_ws
 RUN catkin build
 
 RUN bash -c "source /home/catkin_ws/devel/setup.bash"
-RUN echo "source /home/catkin_ws/devel/setup.bash" >> ~/.bashrc
+RUN echo "source /home/catkin_ws/devel/setup.bash" >> /root/.bashrc
