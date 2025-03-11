@@ -46,7 +46,7 @@ RUN rosdep install --from-paths . --ignore-src -r -y
 
 WORKDIR /root/catkin_ws
 RUN bash -c "source /opt/ros/noetic/setup.bash"
-RUN echo "source /opt/ros/noetic/setup.bash" >> .bashrc
+RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 RUN catkin build
 
 RUN bash -c "source /root/catkin_ws/devel/setup.bash"
